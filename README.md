@@ -1,4 +1,4 @@
-# CharacterImages
+# character-images
 Converts images to characters. Pretty sick.
 
 ## Install
