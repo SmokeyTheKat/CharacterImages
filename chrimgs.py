@@ -5,14 +5,10 @@ import time
 
 argv = sys.argv
 argc = len(argv)
-
 inputFile = ""
-outputFile = ""
-
 width = 170
 height = 40
 contrast = 40
-
 gchars = [
 	" ",
 	".",
@@ -135,13 +131,10 @@ def changecontrast(im, v):
 		value = 128 + f * (c - 128)
 		return max(0, min(255, value))
 	return im.point(contrast)
-
 def vmap(v, l1, h1, l2, h2):
 	return int((v-l1) * ((h2-l2)/(h1-l1)) + l2)
-
 def getpix(v):
 	return gchars[vmap(v, 0, 255, 0, len(gchars)-1)]
-
 def main():
 	rimg = Image.open(inputFile)
 	img = rimg.convert("RGB")
@@ -167,12 +160,6 @@ def main():
 			print(getpix(oimg[y][x][0]), end="")
 		print()
 	exit()
-
-
-
 if argc > 1:
 	inputFile  = argv[1];
-	outputFile = argv[2];
 	main()
-
-
