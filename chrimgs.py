@@ -11,28 +11,14 @@ height = 40
 contrast = 40
 gchars = [
 	" ",
-	".",
-	"`",
-	"'",
-	",",
-	":",
-	";",
-	"\"",
-	"^",
-	"*",
-	"s",
-	"c",
-	"t",
-	"b",
-	"%",
-	"8",
-	"D",
-	"G",
-	"N",
-	"M",
-	"W",
-	"#",
-	"@"
+	"▏",
+	"▎",
+	"▍",
+	"▌",
+	"▋",
+	"▊",
+	"▉",
+	"█",
 ]
 
 if "-help" in argv or "--help" in argv or argc == 1:
@@ -43,6 +29,7 @@ if "-help" in argv or "--help" in argv or argc == 1:
 	print("					-s 331x182")
 	print("		\"-c\"		contrast level of inputed image")
 	print("		\"-g\"		group of chars to use for images")
+	print("					-g variety")
 	print("					-g blocks")
 	print("					-g vboxes")
 	print("					-g hboxes")
@@ -68,6 +55,32 @@ for i in range(argc):
 				"▒",
 				"▓",
 				"█"
+			]
+		elif argv[i+1] == "variety":
+			gchars = [
+				" ",
+				".",
+				"`",
+				"'",
+				",",
+				":",
+				";",
+				"\"",
+				"^",
+				"*",
+				"s",
+				"c",
+				"t",
+				"b",
+				"%",
+				"8",
+				"D",
+				"G",
+				"N",
+				"M",
+				"W",
+				"#",
+				"@"
 			]
 		elif argv[i+1] == "hboxes":
 			gchars = [
