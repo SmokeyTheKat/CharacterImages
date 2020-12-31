@@ -3,37 +3,16 @@ import sys
 import os
 import time
 
-ags = sys.argv
-agsc = len(ags)
+argv = sys.argv
+argc = len(argv)
 
 inputFile = ""
 outputFile = ""
-'''
-gchars = [
-	" ",
-	".",
-	",",
-	"-",
-	"+",
-	"=",
-	"*",
-	"?",
-	"$",
-	"%",
-	"&",
-	"#",
-	"@",
-]
-'''
-'''
-gchars = [
-	" ",
-	"░",
-	"▒",
-	"▓",
-	"█"
-]
-'''
+
+width = 170
+height = 40
+contrast = 40
+
 gchars = [
 	" ",
 	".",
@@ -60,9 +39,77 @@ gchars = [
 	"@"
 ]
 
+if "-help" in argv or "--help" in argv:
+	exit()
+
+for i in range(argc):
+	if argv[i] == "-s":
+		asize = argv[i+1].split("x")
+		width = int(asize[0])
+		height = int(asize[1])
+	elif argv[i] == "-c":
+		contrast = int(argv[i+1])
+	elif argv[i] == "-g":
+		if argv[i+1] == "blocks":
+			gchars = [
+				"░",
+				"▒",
+				"▓",
+				"█"
+			]
+		elif argv[i+1] == "hboxes":
+			gchars = [
+				" ",
+				"▏",
+				"▎",
+				"▍",
+				"▌",
+				"▋",
+				"▊",
+				"▉",
+				"█",
+			]
+		elif argv[i+1] == "vboxes":
+			gchars = [
+				" ",
+				"▁",
+				"▂",
+				"▃",
+				"▄",
+				"▅",
+				"▆",
+				"▇",
+				"█",
+			]
+		elif argv[i+1] == "specials":
+			gchars = [
+				" ",
+				".",
+				",",
+				"-",
+				"+",
+				"=",
+				"*",
+				"?",
+				"$",
+				"%",
+				"&",
+				"#",
+				"@",
+			]
+		elif argv[i+1] == "dots":
+			gchars = [
+				" ",
+				".",
+				",",
+				"'",
+				"\"",
+				"*",
+			]
+		
 
 
-def changecon(im, v):
+def changecontrast(im, v):
 	f = (259 * (v + 255)) / (255 * (259 - v))
 	def contrast(c):
 		value = 128 + f * (c - 128)
@@ -77,15 +124,13 @@ def getpix(v):
 
 def main():
 	rimg = Image.open(inputFile)
-	w = 50
-	h = 15
 	img = rimg.convert("RGB")
-	#img = changecon(img, 2)
-	img = img.resize((w, h), Image.ANTIALIAS)
-	oimg = [ [ [0,0,0] for i in range(w) ] for i in range(h) ]
+	img = changecontrast(img, contrast)
+	img = img.resize((width, height), Image.ANTIALIAS)
+	oimg = [ [ [0,0,0] for i in range(width) ] for i in range(height) ]
 	pixels = img.load()
-	for y in range(h):
-		for x in range(w):
+	for y in range(height):
+		for x in range(width):
 			oimg[y][x][0] = pixels[x,y][0]
 			oimg[y][x][1] = pixels[x,y][1]
 			oimg[y][x][2] = pixels[x,y][2]
@@ -93,17 +138,21 @@ def main():
 			oimg[y][x][0] = gv
 			oimg[y][x][1] = gv
 			oimg[y][x][2] = gv
-	for y in range(h):
-		for x in range(w):
+	for y in range(height):
+		for x in range(width):
 			gv = oimg[y][x][0]
 			img.putpixel((x,y), (gv,gv,gv))
-	for y in range(h):
-		for x in range(w):
+	for y in range(height):
+		for x in range(width):
 			print(getpix(oimg[y][x][0]), end="")
 		print()
 	exit()
 
-if agsc == 3:
-	inputFile  = ags[1];
-	outputFile = ags[2];
+
+
+if argc > 1:
+	inputFile  = argv[1];
+	outputFile = argv[2];
 	main()
+
+
