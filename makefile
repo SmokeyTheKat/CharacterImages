@@ -7,3 +7,6 @@ install:
 	sudo chmod +x /usr/bin/chrimgs
 depens:
 	pip3 install Image
+remove:
+	sudo rm /usr/bin/chrimgs
+	sudo rm -rf /usr/share/chrimgs
